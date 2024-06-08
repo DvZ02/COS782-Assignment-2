@@ -2,36 +2,57 @@
 #include <string>
 #include <map>
 
-template <typename key, typename ReturnType, typename... Args>
+#include "functor.hpp"
+#include "strategy_exception.hpp"
+
+#ifndef STRATEGY_HPP
+#define STRATEGY_HPP
+
+template <typename Key, typename ReturnType, typename... Args>
 class Strategy
 {
 private:
-    std::map<key, std::function<ReturnType(Args...)>> strategies;
-    key current_strategy;
+    typedef Functor<ReturnType, Args...> FunctorType;
+
+    std::map<Key, FunctorType> strategies;
+    Key current_strategy;
+    FunctorType default_strategy;
 
 public:
-    void register_strategy(key name, std::function<ReturnType(Args...)> functor)
-    {
-        strategies[name] = functor;
+
+    Strategy(FunctorType default_strategy) : default_strategy(default_strategy) {
+
     }
 
-    void set_strategy(key name)
+    void register_strategy(Key key, FunctorType functor)
     {
-        current_strategy = name;
+        strategies.insert(std::make_pair(key, functor));
+    }
+
+    void set_strategy(Key key)
+    {
+        current_strategy = key;
+    }
+
+    ReturnType operator()(Args... args)
+    {
+        return execute(args...);
     }
 
     ReturnType execute(Args... args)
     {
         if (strategies.find(current_strategy) == strategies.end())
         {
-            return strategies.begin()->second(args...);
+            throw StrategyException("Strategy not found");
         }
 
-        return strategies[current_strategy](args...);
+        return strategies.at(current_strategy)(args...);
     }
 
-    ReturnType execute_by_name(key strategy_name, Args... args)
+    ReturnType execute_by_key(Key key, Args... args)
     {
-        return strategies[strategy_name](args...);
+        return strategies[key](args...);
     }
 };
+
+#endif
