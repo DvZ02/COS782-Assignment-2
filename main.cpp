@@ -6,12 +6,6 @@
 
 using namespace std;
 
-template <typename ReturnType, typename... Args>
-Functor<ReturnType, Args...> make_functor(ReturnType (*func)(Args...))
-{
-     return Functor<ReturnType, Args...>(std::function<ReturnType(Args...)>(func));
-}
-
 int add(int a, int b)
 {
      return a + b;
@@ -22,23 +16,32 @@ int subtract(int a, int b)
      return a - b;
 }
 
-float add_float(float a, float b)
+enum class Operation
 {
-     return a + b;
-}
+     ADD,
+     SUBTRACT,
+     MULTIPLY,
+};
 
 int main()
 {
-     Strategy<string, int, int, int> int_strategy;
 
-     int_strategy.register_strategy("add", make_functor(add));
-     int_strategy.register_strategy("subtract", make_functor(subtract));
+     Functor<int, int, int> add_functor = Functor<int, int, int>(std::function<int(int, int)>(add));
+     Functor<int, int, int> subtract_functor = Functor<int, int, int>(std::function<int(int, int)>(subtract));
 
-     int_strategy.set_strategy("add");
-     cout << int_strategy.execute(1, 2) << endl;
+     Strategy<Operation, int, int, int> int_strategy(subtract_functor);
 
-     int_strategy.set_strategy("subtract");
-     cout << int_strategy.execute(1, 2) << endl;
+     int_strategy.register_strategy(Operation::ADD, add_functor);
+     int_strategy.register_strategy(Operation::SUBTRACT, subtract_functor);
+
+     int_strategy.set_strategy(Operation::ADD);
+     cout << int_strategy(10, 4) << endl;
+
+     int_strategy.set_strategy(Operation::SUBTRACT);
+     cout << int_strategy(10, 4) << endl;
+
+     int_strategy.set_strategy(Operation::MULTIPLY);
+     cout << int_strategy(10, 4) << endl;
 
      return 0;
 }
