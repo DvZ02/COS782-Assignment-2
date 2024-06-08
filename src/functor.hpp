@@ -1,6 +1,9 @@
 #include <iostream>
 #include <functional>
 
+#ifndef FUNCTOR_HPP
+#define FUNCTOR_HPP
+
 template <typename ReturnType, typename... Args>
 class Functor
 {
@@ -15,3 +18,5 @@ public:
 private:
     std::function<ReturnType(Args...)> func_;
 };
+
+#endif
