@@ -35,6 +35,9 @@ public:
         strategies.insert(std::make_pair(key, functor));
     }
 
+    /*
+        Returns false if the strategy is the only one left.
+    */
     bool remove_strategy(Key key)
     {
         if (strategies.size() == 1)
@@ -69,16 +72,16 @@ public:
 
     ReturnType execute(Args... args)
     {
-        if (strategies.find(current_strategy) == strategies.end())
-        {
-            return strategies.begin()->second(args...);
-        }
-
-        return strategies.at(current_strategy)(args...);
+        return this->execute_by_key(current_strategy, args...);
     }
 
     ReturnType execute_by_key(Key key, Args... args)
     {
+        if (strategies.find(key) == strategies.end())
+        {
+            return strategies.begin()->second(args...);
+        }
+
         return strategies.at(key)(args...);
     }
 
