@@ -2,6 +2,7 @@
 #include <string>
 
 #include "src/functor.hpp"
+#include "src/strategy.hpp"
 
 using namespace std;
 
@@ -28,15 +29,16 @@ float add_float(float a, float b)
 
 int main()
 {
-     Functor<int, int, int> add_functor = make_functor(subtract);
+     Strategy<string, int, int, int> int_strategy;
 
-     int result = add_functor(3, 4);
-     std::cout << "Result of add_functor(3, 4): " << result << std::endl;
+     int_strategy.register_strategy("add", make_functor(add));
+     int_strategy.register_strategy("subtract", make_functor(subtract));
 
-     Functor<float, float, float> add_float_functor = Functor<float, float, float>(std::function<float(float, float)>(add_float));
+     int_strategy.set_strategy("add");
+     cout << int_strategy.execute(1, 2) << endl;
 
-     float result_float = add_float_functor(3.5, 4.5);
-     std::cout << "Result of add_float_functor(3.5, 4.5): " << result_float << std::endl;
+     int_strategy.set_strategy("subtract");
+     cout << int_strategy.execute(1, 2) << endl;
 
      return 0;
 }
