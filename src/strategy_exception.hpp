@@ -18,7 +18,7 @@ public:
         return message;
     }
 
-    const Key getKey(){
+    const Key* getKey(){
         return key;
     }
 
@@ -28,6 +28,7 @@ private:
 
 protected:
     void* OnNoStrategy(const Key& key) {
+        this->key = &key;
         throw StrategyException("Strategy not found.");
     }
 };
