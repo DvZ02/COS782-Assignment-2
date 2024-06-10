@@ -1,4 +1,5 @@
 // Lukas Anthonissen - u21434345
+// Daniel van Zyl - u21446459
 
 #include <iostream>
 #include <functional>
