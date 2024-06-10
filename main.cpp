@@ -69,25 +69,25 @@ int main()
      float_strategy.register_strategy(Operation::MULTIPLY, multiply_float_functor);
 
      int_strategy.set_strategy(Operation::ADD);
-     cout << int_strategy(10, 4) << endl;
+     cout << "ADD: 10, 4 = " << int_strategy(10, 4) << endl;
 
      int_strategy.set_strategy(Operation::SUBTRACT);
-     cout << int_strategy(10, 4) << endl;
+     cout << "SUBTRACT: 10, 4 = " << int_strategy(10, 4) << endl;
 
      int_strategy.set_strategy(Operation::DIVIDE);
-     cout << int_strategy(10, 4) << endl;
+     cout << "DIVIDE: 10, 4 = " << int_strategy(10, 4) << endl;
 
      int_strategy.remove_strategy(Operation::DIVIDE);
-     cout << int_strategy.execute_by_key(Operation::DIVIDE, 10, 4) << endl;
+     cout << "DIVIDE(actually ADD): 10, 4 = " << int_strategy.execute_by_key(Operation::DIVIDE, 10, 4) << endl;
 
      float_strategy.set_strategy(Operation::SUBTRACT);
-     cout << float_strategy(8.5, 4) << endl;
+     cout << "SUBTRACT: 8.5, 4 = " << float_strategy(8.5, 4) << endl;
 
      float_strategy.set_strategy(Operation::ADD);
-     cout << float_strategy(8.5, 4) << endl;
+     cout << "ADD: 8.5, 4 = " << float_strategy(8.5, 4) << endl;
 
      float_strategy.set_strategy(Operation::MULTIPLY);
-     cout << float_strategy(8.5, 4.5) << endl;
+     cout << "MULTIPLY: 8.5, 4.5 = " << float_strategy(8.5, 4.5) << endl;
 
      cout << "The next line should throw an exception" << endl;
      int_strategy.set_strategy(Operation::MULTIPLY);
