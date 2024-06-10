@@ -89,8 +89,8 @@ int main()
      float_strategy.set_strategy(Operation::MULTIPLY);
      cout << float_strategy(8.5, 4.5) << endl;
 
-     int_strategy.set_strategy(Operation::MULTIPLY);
      cout << "The next line should throw an exception" << endl;
+     int_strategy.set_strategy(Operation::MULTIPLY);
      cout << int_strategy(10, 4) << endl;
 
 
