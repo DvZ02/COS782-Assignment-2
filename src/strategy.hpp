@@ -1,3 +1,5 @@
+// Lukas Anthonissen - u21434345
+
 #include <iostream>
 #include <string>
 #include <map>

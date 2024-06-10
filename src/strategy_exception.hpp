@@ -1,3 +1,5 @@
+// Lukas Anthonissen - u21434345
+
 #include <exception>
 
 #ifndef STRATEGY_EXCEPTION_HPP
