@@ -10,14 +10,11 @@ public:
     StrategyException(){
         message = "No strategy";
     };
-    
+
     StrategyException(const char *message) : message(message){}
-    // StrategyException<Key>(const Key *key) : key(key){}
 
     const char *what() const noexcept override
     {
-        // return message;
-        // cout << "Strategy: " << key << " not found." << endl;
         return message;
     }
 
