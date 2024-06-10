@@ -15,7 +15,7 @@
     No strategy may be set if it is not registered.
 */
 
-template <typename Key, template<typename> class StrategyErrorPolicy = StrategyException, typename ReturnType, typename... Args>
+template <typename Key, template<typename> class StrategyErrorPolicy, typename ReturnType, typename... Args>
 class Strategy: StrategyException<Key>
 {
 private:
