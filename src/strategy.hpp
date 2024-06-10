@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 #include "functor.hpp"
 #include "strategy_exception.hpp"
@@ -14,8 +15,8 @@
     No strategy may be set if it is not registered.
 */
 
-template <typename Key, typename ReturnType, typename... Args>
-class Strategy
+template <typename Key, template<typename> class StrategyErrorPolicy = StrategyException, typename ReturnType, typename... Args>
+class Strategy: StrategyException<Key>
 {
 private:
     typedef Functor<ReturnType, Args...> FunctorType;
@@ -25,7 +26,7 @@ private:
 
 public:
 
-    Strategy(Key initial_key, FunctorType initial_strategy) {
+    Strategy(Key initial_key, FunctorType initial_strategy){
         current_strategy = initial_key;
         strategies.insert(std::make_pair(initial_key, initial_strategy));
     }
@@ -59,7 +60,7 @@ public:
     {
         if (strategies.find(key) == strategies.end())
         {
-            throw StrategyException("Strategy not found.");
+            StrategyException<Key>::OnNoStrategy(key);
         }
 
         current_strategy = key;
@@ -85,9 +86,9 @@ public:
         return strategies.at(key)(args...);
     }
 
-    vector<Key> get_keys()
+    std::vector<Key> get_keys()
     {
-        vector<Key> keys;
+        std::vector<Key> keys;
 
         for (auto const &pair : strategies)
         {

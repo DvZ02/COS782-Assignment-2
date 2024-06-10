@@ -3,6 +3,7 @@
 
 #include "src/functor.hpp"
 #include "src/strategy.hpp"
+#include "src/strategy_exception.hpp"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ int main()
      Functor<int, int, int> add_functor = Functor<int, int, int>(std::function<int(int, int)>(add));
      Functor<int, int, int> subtract_functor = Functor<int, int, int>(std::function<int(int, int)>(subtract));
 
-     Strategy<Operation, int, int, int> int_strategy(Operation::SUBTRACT, subtract_functor);
+     Strategy<Operation, StrategyException, int, int, int> int_strategy(Operation::SUBTRACT, subtract_functor);
 
      int_strategy.register_strategy(Operation::ADD, add_functor);
      int_strategy.register_strategy(Operation::SUBTRACT, subtract_functor);
