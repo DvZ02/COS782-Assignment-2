@@ -50,13 +50,13 @@ enum class Operation
 int main()
 {
 
-     Functor<int, int, int> add_functor = Functor<int, int, int>(std::function<int(int, int)>(add));
-     Functor<int, int, int> subtract_functor = Functor<int, int, int>(std::function<int(int, int)>(subtract));
-     Functor<int, int, int> devide_functor = Functor<int, int, int>(std::function<int(int, int)>(devide));
+     Functor<int, int, int> add_functor = Functor<int, int, int>(add);
+     Functor<int, int, int> subtract_functor = Functor<int, int, int>(subtract);
+     Functor<int, int, int> devide_functor = Functor<int, int, int>(devide);
 
-     Functor<float, float, float> add_float_functor = Functor<float, float, float>(std::function<float(float, float)>(add_float));
-     Functor<float, float, float> subtract_float_functor = Functor<float, float, float>(std::function<float(float, float)>(subtract_float));
-     Functor<float, float, float> multiply_float_functor = Functor<float, float, float>(std::function<float(float, float)>(multiply_float));
+     Functor<float, float, float> add_float_functor = Functor<float, float, float>(add_float);
+     Functor<float, float, float> subtract_float_functor = Functor<float, float, float>(subtract_float);
+     Functor<float, float, float> multiply_float_functor = Functor<float, float, float>(multiply_float);
 
      Strategy<Operation, StrategyException, int, int, int> int_strategy(Operation::SUBTRACT, subtract_functor);
      Strategy<Operation, StrategyException, float, float, float> float_strategy(Operation::ADD, add_float_functor);
